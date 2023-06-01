@@ -1,0 +1,47 @@
+dataSourceKey: defaultDS
+destination: example
+groupId: g1
+outerAdapterKey: ch1
+concurrent: true
+dbMapping:
+  database: mysql_to_ch
+  table: account
+  sourcePk:
+    id: id
+  targetTable: account
+  targetPk:
+    id: a.id
+  targetSign: version
+  #  mapAll: true
+  targetColumns:
+    id:
+    account_name:
+    password:
+    nick_name:
+    e_mail:
+  etlCondition: "where id >= {}"
+  commitBatch: 3000 # 批量提交的大小
+  sql: "SELECT
+	a.id AS id,
+	a.account_name AS account_name,
+	a.`password` AS `password` ,
+	a.nick_name as nick_name,
+	a.e_mail as e_mail,
+	r.id as role_id,
+	r.role_key as role_key,
+	r.role_name as role_name
+    FROM
+	account a
+	LEFT JOIN account_role ar ON ar.account_id = a.id
+	LEFT JOIN role r ON ar.role_id = r.id"
+
+
+## Mirror schema synchronize config
+#dataSourceKey: defaultDS
+#destination: example
+#groupId: g1
+#outerAdapterKey: mysql1
+#concurrent: true
+#dbMapping:
+#  mirrorDb: true
+#  database: mytest

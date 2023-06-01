@@ -58,7 +58,7 @@ public class CommonRest {
      *
      * @param type 类型 hbase, es
      * @param key adapter key
-     * @param task 任务名对应配置文件名 mytest_user.yml
+     * @param task 任务名对应配置文件名 account.yml
      * @param params etl where条件参数, 为空全部导入
      */
     @PostMapping("/etl/{type}/{key}/{task}")

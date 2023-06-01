@@ -17,55 +17,55 @@ canal.conf:
   secretKey:
   consumerProperties:
     # canal tcp consumer
-    canal.tcp.server.host: 127.0.0.1:11111
+    canal.tcp.server.host: 10.8.1.168:11111
     canal.tcp.zookeeper.hosts:
     canal.tcp.batch.size: 500
-    canal.tcp.username:
-    canal.tcp.password:
+    canal.tcp.username: canal
+    canal.tcp.password: canal
     # kafka consumer
-    kafka.bootstrap.servers: 127.0.0.1:9092
-    kafka.enable.auto.commit: false
-    kafka.auto.commit.interval.ms: 1000
-    kafka.auto.offset.reset: latest
-    kafka.request.timeout.ms: 40000
-    kafka.session.timeout.ms: 30000
-    kafka.isolation.level: read_committed
-    kafka.max.poll.records: 1000
+#    kafka.bootstrap.servers: 127.0.0.1:9092
+#    kafka.enable.auto.commit: false
+#    kafka.auto.commit.interval.ms: 1000
+#    kafka.auto.offset.reset: latest
+#    kafka.request.timeout.ms: 40000
+#    kafka.session.timeout.ms: 30000
+#    kafka.isolation.level: read_committed
+#    kafka.max.poll.records: 1000
     # rocketMQ consumer
-    rocketmq.namespace:
-    rocketmq.namesrv.addr: 127.0.0.1:9876
-    rocketmq.batch.size: 1000
-    rocketmq.enable.message.trace: false
-    rocketmq.customized.trace.topic:
-    rocketmq.access.channel:
-    rocketmq.subscribe.filter:
+#    rocketmq.namespace:
+#    rocketmq.namesrv.addr: 127.0.0.1:9876
+#    rocketmq.batch.size: 1000
+#    rocketmq.enable.message.trace: false
+#    rocketmq.customized.trace.topic:
+#    rocketmq.access.channel:
+#    rocketmq.subscribe.filter:
     # rabbitMQ consumer
-    rabbitmq.host:
-    rabbitmq.virtual.host:
-    rabbitmq.username:
-    rabbitmq.password:
-    rabbitmq.resource.ownerId:
+#    rabbitmq.host:
+#    rabbitmq.virtual.host:
+#    rabbitmq.username:
+#    rabbitmq.password:
+#    rabbitmq.resource.ownerId:
 
-#  srcDataSources:
-#    defaultDS:
-#      url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true
-#      username: root
-#      password: 121212
+  srcDataSources:
+    defaultDS:
+      url: jdbc:mysql://10.8.1.161:3306/mysql_to_ch?useUnicode=true
+      username: root
+      password: QingCheng1234567890.
   canalAdapters:
   - instance: example # canal instance Name or mq topic name
     groups:
     - groupId: g1
       outerAdapters:
-      - name: logger
-#      - name: rdb
-#        key: mysql1
-#        properties:
-#          jdbc.driverClassName: com.mysql.jdbc.Driver
-#          jdbc.url: jdbc:mysql://127.0.0.1:3306/mytest2?useUnicode=true
-#          jdbc.username: root
-#          jdbc.password: 121212
-#          druid.stat.enable: false
-#          druid.stat.slowSqlMillis: 1000
+#      - name: logger
+      - name: clickhouse
+        key: ch1
+        properties:
+          jdbc.driverClassName: com.clickhouse.jdbc.ClickHouseDriver
+          jdbc.url: jdbc:clickhouse:http://10.8.1.169:8123/mysql_to_ch
+          jdbc.username: default
+          jdbc.password:
+          druid.stat.enable: false
+          druid.stat.slowSqlMillis: 1000
 #      - name: rdb
 #        key: oracle1
 #        properties:
@@ -87,7 +87,8 @@ canal.conf:
 #          hbase.zookeeper.quorum: 127.0.0.1
 #          hbase.zookeeper.property.clientPort: 2181
 #          zookeeper.znode.parent: /hbase
-#      - name: es
+#      - name: es7
+#        key: ch1
 #        hosts: 127.0.0.1:9300 # 127.0.0.1:9200 for rest mode
 #        properties:
 #          mode: transport # or rest
